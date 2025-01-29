@@ -1,9 +1,16 @@
+@php
+    use App\Enum\Rating;
+    use App\Livewire\Dealership\FilterRating;
+@endphp
+
 <div>
     <x-slot name="pageTitle">Dealerships</x-slot>
-    <div class="space-y-5">
-        <div>
+    <x-slot name="actions">
+        <div class="flex gap-x-3">
             <flux:input wire:model.live="search" type="search" icon="magnifying-glass" placeholder="Search..." />
         </div>
+    </x-slot>
+    <div class="space-y-5">
         <flux:radio.group wire:model.live="filters.status" variant="cards" :indicator="false" class="max-sm:flex-col">
             @foreach ($filters->statuses() as $status)
                 <flux:radio :value="$status['value']" :label="$status['label']" description="{{ $status['count'] }}" />

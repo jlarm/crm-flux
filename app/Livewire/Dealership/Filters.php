@@ -3,6 +3,7 @@
 namespace App\Livewire\Dealership;
 
 use App\Models\Dealership;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Form;
 
@@ -16,7 +17,7 @@ class Filters extends Form
         return $this->applyStatus($query);
     }
 
-    public function statuses()
+    public function statuses(): Collection
     {
         return collect(FilterStatus::cases())->map(function ($status) {
             $count = $this->applyStatus(

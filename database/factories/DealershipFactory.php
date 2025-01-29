@@ -24,7 +24,7 @@ class DealershipFactory extends Factory
             'city' => $this->faker->city(),
             'state' => $this->faker->randomElement(State::class),
             'zip_code' => $this->faker->postcode(),
-            'phone' => $this->faker->phoneNumber(),
+            'phone' => $this->faker->numerify('###-###-####'),
             'email' => $this->faker->unique()->safeEmail(),
             'current_solution_name' => 'KPA',
             'current_solution_use' => 'Compliance',

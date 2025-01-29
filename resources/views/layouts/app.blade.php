@@ -61,9 +61,18 @@
         </flux:sidebar>
 
         <flux:main container>
-            @if (isset($pageTitle))
-                <flux:heading size="lg" class="mb-5">{{ $pageTitle }}</flux:heading>
-            @endif
+            <div>
+                <div class="flex items-end justify-between">
+                    @if (isset($pageTitle))
+                        <flux:heading size="lg">{{ $pageTitle }}</flux:heading>
+                    @endif
+
+                    @if (isset($actions))
+                        {{ $actions }}
+                    @endif
+                </div>
+                <flux:separator class="my-5" variant="subtle" />
+            </div>
 
             {{ $slot }}
         </flux:main>
