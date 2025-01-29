@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Dealership;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,10 +18,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Joe Lohr',
             'email' => 'jlohr@autorisknow.com',
             'password' => bcrypt('password'),
+            'is_admin' => true,
         ]);
 
-        $this->call([
-            DealershipSeeder::class,
-        ]);
+        $users = User::factory()->count(10)->create();
+        $dealerships = Dealership::factory()->count(1000)->create();
+
+        $users->each(function ($user) use ($dealerships) {
+            $user->dealerships()->attach(
+                $dealerships->random(rand(1, 20))->pluck('id')->toArray()
+            );
+        });
     }
 }

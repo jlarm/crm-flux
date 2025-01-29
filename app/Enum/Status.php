@@ -16,4 +16,13 @@ enum Status: string
             self::IMPORTED => 'Imported',
         };
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::ACTIVE => 'green',
+            self::INACTIVE => 'red',
+            self::IMPORTED => 'blue',
+        };
+    }
 }

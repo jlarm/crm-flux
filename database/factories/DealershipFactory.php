@@ -19,7 +19,6 @@ class DealershipFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::all()->random()->id,
             'name' => $this->faker->company(),
             'address' => $this->faker->address(),
             'city' => $this->faker->city(),
@@ -37,5 +36,12 @@ class DealershipFactory extends Factory
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
+    }
+
+    public function configure(): DealershipFactory
+    {
+        return $this->afterCreating(function (Dealership $dealership) {
+            $dealership->users()->attach(User::inRandomOrder()->first());
+        });
     }
 }

@@ -16,4 +16,13 @@ enum Rating: string
             self::COLD => 'Cold',
         };
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::HOT => 'red',
+            self::WARM => 'yellow',
+            self::COLD => 'blue',
+        };
+    }
 }
