@@ -1,40 +1,45 @@
 <div>
-    <flux:table :paginate="$this->dealerships">
-        <flux:columns>
-            <flux:column>Name</flux:column>
-            <flux:column>Phone</flux:column>
-            <flux:column>Status</flux:column>
-            <flux:column>Rating</flux:column>
-            <flux:column>Stores</flux:column>
-            <flux:column>Consultants</flux:column>
-            <flux:column></flux:column>
-        </flux:columns>
-        <flux:rows>
-            @foreach ($this->dealerships as $dealership)
-                <flux:row :key="$dealership->id">
-                    <flux:cell>{{ $dealership->name }}</flux:cell>
-                    <flux:cell>{{ $dealership->phone }}</flux:cell>
-                    <flux:cell>
-                        <flux:badge size="sm" :color="$dealership->status->color()" inset="top bottom">
-                            {{ $dealership->status->label() }}
-                        </flux:badge>
-                    </flux:cell>
-                    <flux:cell>
-                        <flux:badge size="sm" :color="$dealership->rating->color()" inset="top bottom">
-                            {{ $dealership->rating->label() }}
-                        </flux:badge>
-                    </flux:cell>
-                    <flux:cell>
-                        <flux:badge size="sm">{{ mt_rand(1, 20) }}</flux:badge>
-                    </flux:cell>
-                    <flux:cell>
-                        @foreach ($dealership->users as $user)
-                            <p class="text-xs">{{ $user->name }}</p>
-                        @endforeach
-                    </flux:cell>
-                    <flux:cell>View</flux:cell>
-                </flux:row>
-            @endforeach
-        </flux:rows>
-    </flux:table>
+    <x-slot name="pageTitle">Dealerships</x-slot>
+    <div class="space-y-5">
+        <div>
+            <flux:input wire:model.live="search" type="search" icon="magnifying-glass" placeholder="Search..." />
+        </div>
+        <flux:table :paginate="$this->dealerships">
+            <flux:columns>
+                <flux:column
+                    sortable
+                    :sorted="$sortBy === 'name'"
+                    :direction="$sortDirection"
+                    wire:click="sort('name')"
+                >
+                    Name
+                </flux:column>
+                <flux:column>Phone</flux:column>
+                <flux:column
+                    sortable
+                    :sorted="$sortBy === 'status'"
+                    :direction="$sortDirection"
+                    wire:click="sort('status')"
+                >
+                    Status
+                </flux:column>
+                <flux:column
+                    sortable
+                    :sorted="$sortBy === 'rating'"
+                    :direction="$sortDirection"
+                    wire:click="sort('rating')"
+                >
+                    Rating
+                </flux:column>
+                <flux:column>Stores</flux:column>
+                <flux:column>Consultants</flux:column>
+                <flux:column></flux:column>
+            </flux:columns>
+            <flux:rows>
+                @foreach ($this->dealerships as $dealership)
+                    <livewire:dealership.index-item :$dealership :key="$dealership->id" />
+                @endforeach
+            </flux:rows>
+        </flux:table>
+    </div>
 </div>

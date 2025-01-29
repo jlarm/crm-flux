@@ -21,6 +21,12 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
+        User::create([
+            'name' => 'John Doe',
+            'email' => 'jdoe@autorisknow.com',
+            'password' => bcrypt('password'),
+        ]);
+
         $users = User::factory()->count(10)->create();
         $dealerships = Dealership::factory()->count(1000)->create();
 

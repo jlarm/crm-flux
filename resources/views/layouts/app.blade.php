@@ -61,6 +61,10 @@
         </flux:sidebar>
 
         <flux:main container>
+            @if (isset($pageTitle))
+                <flux:heading size="lg" class="mb-5">{{ $pageTitle }}</flux:heading>
+            @endif
+
             {{ $slot }}
         </flux:main>
 

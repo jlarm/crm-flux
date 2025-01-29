@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
+    use Searchable, WithPagination;
 
     public $sortBy = 'name';
     public $sortDirection = 'asc';
@@ -29,10 +29,13 @@ class Index extends Component
     #[Computed]
     public function dealerships()
     {
-        return $this->dealerQuery()
+        $query = $this->dealerQuery()
             ->with('users')
-            ->tap(fn ($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)
-            ->paginate(20);
+            ->tap(fn ($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query);
+
+        $query = $this->applySearch($query);
+
+        return $query->paginate(20);
     }
 
     #[Title('Dealerships')]
