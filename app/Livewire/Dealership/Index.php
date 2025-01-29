@@ -29,7 +29,7 @@ class Index extends Component
     #[Computed]
     public function dealerships()
     {
-        return Dealership::query()
+        return $this->dealerQuery()
             ->with('users')
             ->tap(fn ($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)
             ->paginate(20);
@@ -39,5 +39,14 @@ class Index extends Component
     public function render(): View
     {
         return view('livewire.dealership.index');
+    }
+
+    private function dealerQuery()
+    {
+        if (! auth()->user()->is_admin) {
+            return auth()->user()->dealerships();
+        }
+
+        return Dealership::query();
     }
 }
