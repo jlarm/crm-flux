@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enum\DevStatus;
+use App\Enum\Rating;
 use App\Enum\Status;
+use App\Enum\Type;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,8 +46,8 @@ class Dealership extends Model
         'current_solution_use' => 'string',
         'notes' => 'string',
         'status' => Status::class,
-        'rating' => 'integer',
-        'type' => 'string',
+        'rating' => Rating::class,
+        'type' => Type::class,
         'in_development' => 'boolean',
         'dev_status' => DevStatus::class,
     ];

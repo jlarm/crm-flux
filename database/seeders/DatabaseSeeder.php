@@ -18,5 +18,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'jlohr@autorisknow.com',
             'password' => bcrypt('password'),
         ]);
+
+        $this->call([
+            DealershipSeeder::class,
+        ]);
     }
 }
