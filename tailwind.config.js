@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import colors from 'tailwindcss/colors';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -16,6 +17,17 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                // Re-assign Flux's gray of choice...
+                zinc: colors.slate,
+
+                // Accent variables are defined in resources/css/app.css...
+                accent: {
+                    DEFAULT: 'var(--color-accent)',
+                    content: 'var(--color-accent-content)',
+                    foreground: 'var(--color-accent-foreground)',
+                },
             },
         },
     },

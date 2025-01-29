@@ -25,10 +25,10 @@
 
             <flux:navbar class="-mb-px max-lg:hidden">
                 <flux:navbar.item icon="home" href="#" current>Home</flux:navbar.item>
-                <flux:navbar.item icon="inbox" badge="12" href="#">Dealerships</flux:navbar.item>
-                <flux:navbar.item icon="document-text" href="#">Contacts</flux:navbar.item>
+                <flux:navbar.item icon="building-office" href="#">Dealerships</flux:navbar.item>
+                <flux:navbar.item icon="user-group" href="#">Contacts</flux:navbar.item>
                 <flux:navbar.item icon="calendar" href="#">Reminders</flux:navbar.item>
-                <flux:navbar.item icon="calendar" href="#">Users</flux:navbar.item>
+                <flux:navbar.item icon="user" href="#">Users</flux:navbar.item>
 
                 <flux:separator vertical variant="subtle" class="my-2" />
 
