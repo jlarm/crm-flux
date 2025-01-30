@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Dealership;
+namespace App\Livewire\Dealership\Enums;
 
 use App\Enum\Status;
 

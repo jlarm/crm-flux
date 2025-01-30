@@ -1,21 +1,28 @@
-@php
-    use App\Enum\Rating;
-    use App\Livewire\Dealership\FilterRating;
-@endphp
-
 <div>
     <x-slot name="pageTitle">Dealerships</x-slot>
     <x-slot name="actions">
-        <div class="flex gap-x-3">
-            <flux:input wire:model.live="search" type="search" icon="magnifying-glass" placeholder="Search..." />
-        </div>
+        <flux:button variant="primary" size="sm">Create</flux:button>
     </x-slot>
-    <div class="space-y-5">
+    <div class="space-y-10">
         <flux:radio.group wire:model.live="filters.status" variant="cards" :indicator="false" class="max-sm:flex-col">
             @foreach ($filters->statuses() as $status)
                 <flux:radio :value="$status['value']" :label="$status['label']" description="{{ $status['count'] }}" />
             @endforeach
         </flux:radio.group>
+        <div class="flex gap-x-3">
+            <flux:input wire:model.live="search" type="search" icon="magnifying-glass" placeholder="Search..." />
+            <flux:dropdown>
+                <flux:button icon-trailing="chevron-down">Rating Filter</flux:button>
+
+                <flux:menu>
+                    <flux:checkbox.group wire:model.live="filters.rating">
+                        @foreach ($filters->ratings() as $rating)
+                            <flux:checkbox :label="$rating['label']" :value="$rating['value']" />
+                        @endforeach
+                    </flux:checkbox.group>
+                </flux:menu>
+            </flux:dropdown>
+        </div>
         <flux:table :paginate="$dealerships">
             <flux:columns>
                 <flux:column

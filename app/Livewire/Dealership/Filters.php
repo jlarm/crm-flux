@@ -2,19 +2,28 @@
 
 namespace App\Livewire\Dealership;
 
-use App\Models\Dealership;
+use App\Livewire\Dealership\Enums\FilterRating;
+use App\Livewire\Dealership\Enums\FilterStatus;
+use App\Livewire\Dealership\Traits\HasDealershipQuery;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Form;
 
 class Filters extends Form
 {
+    use HasDealershipQuery;
+
     #[Url]
     public FilterStatus $status = FilterStatus::ALL;
 
+    #[Url]
+    public array $rating = [];
+
     public function apply($query)
     {
-        return $this->applyStatus($query);
+        $query = $this->applyStatus($query);
+
+        return $this->applyRating($query);
     }
 
     public function statuses(): Collection
@@ -33,6 +42,18 @@ class Filters extends Form
         });
     }
 
+    public function ratings(): Collection
+    {
+        return collect(FilterRating::cases())
+            ->filter(fn ($rating) => $rating !== FilterRating::ALL)
+            ->map(function ($rating) {
+                return [
+                    'value' => $rating->value,
+                    'label' => $rating->label(),
+                ];
+            });
+    }
+
     public function applyStatus($query, $status = null)
     {
         $status = $status ?? $this->status;
@@ -44,12 +65,14 @@ class Filters extends Form
         return $query->where('status', $status);
     }
 
-    private function dealerQuery()
+    public function applyRating($query, $rating = null)
     {
-        if (! auth()->user()->is_admin) {
-            return auth()->user()->dealerships();
+        $rating = $rating ?? $this->rating;
+
+        if (empty($rating)) {
+            return $query;
         }
 
-        return Dealership::query();
+        return $query->whereIn('rating', $rating);
     }
 }

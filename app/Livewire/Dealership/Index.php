@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Dealership;
 
-use App\Models\Dealership;
+use App\Livewire\Dealership\Traits\HasDealershipQuery;
 use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -10,7 +10,7 @@ use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use Searchable, WithPagination;
+    use HasDealershipQuery, Searchable, WithPagination;
 
     public $sortBy = 'name';
     public $sortDirection = 'asc';
@@ -43,14 +43,5 @@ class Index extends Component
         return view('livewire.dealership.index', [
             'dealerships' => $dealerships,
         ]);
-    }
-
-    private function dealerQuery()
-    {
-        if (! auth()->user()->is_admin) {
-            return auth()->user()->dealerships();
-        }
-
-        return Dealership::query();
     }
 }
