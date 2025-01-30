@@ -1,3 +1,7 @@
+@php
+    use App\Enum\Type;
+@endphp
+
 <div>
     <x-slot name="pageTitle">Dealerships</x-slot>
     <x-slot name="actions">
@@ -12,12 +16,35 @@
         <div class="flex gap-x-3">
             <flux:input wire:model.live="search" type="search" icon="magnifying-glass" placeholder="Search..." />
             <flux:dropdown>
-                <flux:button icon-trailing="chevron-down">Rating Filter</flux:button>
+                <flux:button icon-trailing="chevron-down">
+                    @if (! empty($filters->rating))
+                        <flux:badge color="blue" size="sm">{{ count($filters->rating) }}</flux:badge>
+                    @endif
+
+                    Rating Filter
+                </flux:button>
 
                 <flux:menu>
                     <flux:checkbox.group wire:model.live="filters.rating">
                         @foreach ($filters->ratings() as $rating)
                             <flux:checkbox :label="$rating['label']" :value="$rating['value']" />
+                        @endforeach
+                    </flux:checkbox.group>
+                </flux:menu>
+            </flux:dropdown>
+            <flux:dropdown>
+                <flux:button icon-trailing="chevron-down">
+                    @if (! empty($filters->types))
+                        <flux:badge color="blue" size="sm">{{ count($filters->types) }}</flux:badge>
+                    @endif
+
+                    Type Filter
+                </flux:button>
+
+                <flux:menu>
+                    <flux:checkbox.group wire:model.live="filters.types">
+                        @foreach ($filters->types() as $type)
+                            <flux:checkbox :label="$type['label']" :value="$type['value']" />
                         @endforeach
                     </flux:checkbox.group>
                 </flux:menu>
@@ -33,7 +60,6 @@
                 >
                     Name
                 </flux:column>
-                <flux:column>Phone</flux:column>
                 <flux:column
                     sortable
                     :sorted="$sortBy === 'status'"
@@ -51,6 +77,7 @@
                     Rating
                 </flux:column>
                 <flux:column>Stores</flux:column>
+                <flux:column>Type</flux:column>
                 <flux:column>Consultants</flux:column>
                 <flux:column></flux:column>
             </flux:columns>

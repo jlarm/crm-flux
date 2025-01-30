@@ -2,7 +2,8 @@
 
 namespace App\Livewire\Dealership;
 
-use App\Livewire\Dealership\Enums\FilterRating;
+use App\Enum\Rating;
+use App\Enum\Type;
 use App\Livewire\Dealership\Enums\FilterStatus;
 use App\Livewire\Dealership\Traits\HasDealershipQuery;
 use Illuminate\Support\Collection;
@@ -16,12 +17,16 @@ class Filters extends Form
     #[Url]
     public FilterStatus $status = FilterStatus::ALL;
 
-    #[Url]
+    #[Url(as: 'ratings')]
     public array $rating = [];
+
+    #[Url(as: 'types')]
+    public array $types = [];
 
     public function apply($query)
     {
         $query = $this->applyStatus($query);
+        $query = $this->applyTypes($query);
 
         return $this->applyRating($query);
     }
@@ -44,14 +49,23 @@ class Filters extends Form
 
     public function ratings(): Collection
     {
-        return collect(FilterRating::cases())
-            ->filter(fn ($rating) => $rating !== FilterRating::ALL)
+        return collect(Rating::cases())
             ->map(function ($rating) {
                 return [
                     'value' => $rating->value,
                     'label' => $rating->label(),
                 ];
             });
+    }
+
+    public function types(): Collection
+    {
+        return collect(Type::cases())->map(function ($type) {
+            return [
+                'value' => $type->value,
+                'label' => $type->label(),
+            ];
+        });
     }
 
     public function applyStatus($query, $status = null)
@@ -74,5 +88,16 @@ class Filters extends Form
         }
 
         return $query->whereIn('rating', $rating);
+    }
+
+    public function applyTypes($query, $types = null)
+    {
+        $types = $types ?? $this->types;
+
+        if (empty($types)) {
+            return $query;
+        }
+
+        return $query->whereIn('type', $types);
     }
 }
