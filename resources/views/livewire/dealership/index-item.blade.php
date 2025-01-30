@@ -1,5 +1,8 @@
 <flux:row>
-    <flux:cell>{{ $dealership->name }}</flux:cell>
+    <flux:cell>
+        <flux:heading class="mb-1">{{ $dealership->name }}</flux:heading>
+        <p class="text-xs">{{ $dealership->city }}, {{ $dealership->state }}</p>
+    </flux:cell>
     <flux:cell>
         <flux:badge size="sm" :color="$dealership->status->color()" inset="top bottom">
             {{ $dealership->status->label() }}

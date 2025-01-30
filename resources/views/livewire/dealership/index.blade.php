@@ -21,7 +21,7 @@
                         <flux:badge color="blue" size="sm">{{ count($filters->rating) }}</flux:badge>
                     @endif
 
-                    Rating Filter
+                    Rating
                 </flux:button>
 
                 <flux:menu>
@@ -38,7 +38,7 @@
                         <flux:badge color="blue" size="sm">{{ count($filters->types) }}</flux:badge>
                     @endif
 
-                    Type Filter
+                    Type
                 </flux:button>
 
                 <flux:menu>
@@ -49,6 +49,26 @@
                     </flux:checkbox.group>
                 </flux:menu>
             </flux:dropdown>
+            <flux:dropdown>
+                <flux:button icon-trailing="chevron-down">
+                    @if (! empty($filters->users))
+                        <flux:badge color="blue" size="sm">{{ count($filters->users) }}</flux:badge>
+                    @endif
+
+                    Consultant
+                </flux:button>
+
+                <flux:menu>
+                    <flux:checkbox.group wire:model.live="filters.users">
+                        @foreach ($filters->users() as $user)
+                            <flux:checkbox :label="$user->name" :value="$user->id" />
+                        @endforeach
+                    </flux:checkbox.group>
+                </flux:menu>
+            </flux:dropdown>
+            @if (! empty($filters->rating) || ! empty($filters->types) || ! empty($filters->users))
+                <flux:button icon="x-mark" variant="filled" wire:click="clearFilters">Clear</flux:button>
+            @endif
         </div>
         <flux:table :paginate="$dealerships">
             <flux:columns>

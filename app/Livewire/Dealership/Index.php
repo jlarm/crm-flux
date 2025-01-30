@@ -27,6 +27,11 @@ class Index extends Component
         }
     }
 
+    public function clearFilters(): void
+    {
+        $this->filters->reset();
+    }
+
     #[Title('Dealerships')]
     public function render(): View
     {
@@ -38,7 +43,7 @@ class Index extends Component
 
         $dealerships = $query
             ->tap(fn ($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)
-            ->paginate(20);
+            ->paginate(10);
 
         return view('livewire.dealership.index', [
             'dealerships' => $dealerships,

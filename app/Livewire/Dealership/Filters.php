@@ -6,6 +6,7 @@ use App\Enum\Rating;
 use App\Enum\Type;
 use App\Livewire\Dealership\Enums\FilterStatus;
 use App\Livewire\Dealership\Traits\HasDealershipQuery;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Form;
@@ -23,12 +24,16 @@ class Filters extends Form
     #[Url(as: 'types')]
     public array $types = [];
 
+    #[Url]
+    public array $users = [];
+
     public function apply($query)
     {
         $query = $this->applyStatus($query);
         $query = $this->applyTypes($query);
+        $query = $this->applyRating($query);
 
-        return $this->applyRating($query);
+        return $this->applyUsers($query);
     }
 
     public function statuses(): Collection
@@ -68,6 +73,14 @@ class Filters extends Form
         });
     }
 
+    public function users(): Collection
+    {
+        return User::query()
+            ->whereNot('id', 1)
+            ->whereHas('dealerships')
+            ->get();
+    }
+
     public function applyStatus($query, $status = null)
     {
         $status = $status ?? $this->status;
@@ -99,5 +112,16 @@ class Filters extends Form
         }
 
         return $query->whereIn('type', $types);
+    }
+
+    public function applyUsers($query, $users = null)
+    {
+        $users = $users ?? $this->users;
+
+        if (empty($users)) {
+            return $query;
+        }
+
+        return $query->whereHas('users', fn ($q) => $q->whereIn('users.id', $users));
     }
 }
