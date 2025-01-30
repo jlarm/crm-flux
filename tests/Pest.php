@@ -11,6 +11,9 @@
 |
 */
 
+use App\Models\User;
+use Tests\TestCase;
+
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
@@ -41,7 +44,26 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function asAdmin(): TestCase
 {
-    // ..
+    $user = User::create([
+        'name' => 'John Doe',
+        'email' => 'john@doe.com',
+        'password' => 'password',
+        'is_admin' => true,
+    ]);
+
+    return test()->actingAs($user);
+}
+
+function asConsultant(): TestCase
+{
+    $user = User::create([
+        'name' => 'Frank Thomas',
+        'email' => 'frank@thomas.com',
+        'password' => 'password',
+        'is_admin' => false,
+    ]);
+
+    return test()->actingAs($user);
 }
