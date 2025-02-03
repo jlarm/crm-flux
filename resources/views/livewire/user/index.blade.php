@@ -1,21 +1,19 @@
 <div>
     <x-slot name="pageTitle">Users</x-slot>
     <x-slot name="actions">
-        <flux:button variant="primary" size="sm">Create</flux:button>
+        <livewire:user.invite />
     </x-slot>
     <div>
         <flux:table>
             <flux:columns>
                 <flux:column>Name</flux:column>
+                <flux:column>Status</flux:column>
                 <flux:column>Email</flux:column>
                 <flux:column></flux:column>
             </flux:columns>
             <flux:rows>
                 @foreach ($users as $user)
-                    <flux:row>
-                        <flux:cell>{{ $user->name }}</flux:cell>
-                        <flux:cell>{{ $user->email }}</flux:cell>
-                    </flux:row>
+                    <livewire:user.index-item :$user :wire:key="$user->id" />
                 @endforeach
             </flux:rows>
         </flux:table>
