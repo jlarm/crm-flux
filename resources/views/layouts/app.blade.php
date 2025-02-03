@@ -27,6 +27,10 @@
 
             <flux:spacer />
 
+            <flux:subheading class="text-xs" wire:poll.1s>
+                {{ now()->inUserTimezone()->format('F d, y h:i:s a') }}
+            </flux:subheading>
+
             <flux:dropdown position="top" align="start">
                 <flux:button variant="ghost" icon-trailing="chevron-down">{{ auth()->user()->name }}</flux:button>
                 <flux:menu class="space-y-2">

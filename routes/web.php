@@ -5,13 +5,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::view('dashboard', 'dashboard')
+        ->name('dashboard');
 
-Route::get('dealerships', Index::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dealership.index');
+    Route::get('dealerships', Index::class)
+        ->name('dealership.index');
+
+    Route::get('users', \App\Livewire\User\Index::class)
+        ->name('user.index');
+});
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

@@ -1,7 +1,3 @@
-@php
-    use App\Enum\Type;
-@endphp
-
 <div>
     <x-slot name="pageTitle">Dealerships</x-slot>
     <x-slot name="actions">
