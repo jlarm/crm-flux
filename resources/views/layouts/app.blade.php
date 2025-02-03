@@ -75,7 +75,9 @@
                         {{ $actions }}
                     @endif
                 </div>
-                <flux:separator class="my-5" variant="subtle" />
+                @if (isset($pageTitle))
+                    <flux:separator class="my-5" variant="subtle" />
+                @endif
             </div>
 
             {{ $slot }}

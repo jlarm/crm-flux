@@ -90,61 +90,33 @@ new class extends Component {
     </header>
 
     <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input
-                wire:model="name"
-                id="name"
-                name="name"
-                type="text"
-                class="mt-1 block w-full"
-                required
-                autofocus
-                autocomplete="name"
-            />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
-        </div>
+        <flux:field>
+            <flux:label>Name</flux:label>
 
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input
-                wire:model="email"
-                id="email"
-                name="email"
-                type="email"
-                class="mt-1 block w-full"
-                required
-                autocomplete="username"
-            />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <flux:input wire:model="name" type="text" />
 
-            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
-                <div>
-                    <p class="mt-2 text-sm text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
+            <flux:error name="name" />
+        </flux:field>
 
-                        <button
-                            wire:click.prevent="sendVerification"
-                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                        >
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
+        <flux:field>
+            <flux:label>Email</flux:label>
 
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
-        </div>
+            <flux:input wire:model="email" type="email" />
 
-        <flux:select wire:model="timezone" variant="listbox" searchable placeholder="Choose timezone...">
-            @foreach ($this->timezones() as $timezone)
-                <flux:option :value="$timezone">{{ $timezone }}</flux:option>
-            @endforeach
-        </flux:select>
+            <flux:error name="email" />
+        </flux:field>
+
+        <flux:field>
+            <flux:label>Timezone</flux:label>
+
+            <flux:select wire:model="timezone" variant="listbox" searchable placeholder="Choose timezone...">
+                @foreach ($this->timezones() as $timezone)
+                    <flux:option :value="$timezone">{{ $timezone }}</flux:option>
+                @endforeach
+            </flux:select>
+
+            <flux:error name="timezone" />
+        </flux:field>
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
