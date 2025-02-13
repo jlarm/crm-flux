@@ -1,6 +1,14 @@
 <flux:navbar class="-mb-px max-lg:hidden">
-    <flux:navbar.item wire:navigate href="{{ route('dashboard') }}">Home</flux:navbar.item>
-    <flux:navbar.item wire:navigate href="{{ route('dealership.index') }}">Dealerships</flux:navbar.item>
+    <flux:navbar.item wire:navigate href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard')">
+        Home
+    </flux:navbar.item>
+    <flux:navbar.item
+        wire:navigate
+        href="{{ route('dealership.index') }}"
+        :current="request()->routeIs('dealership.*')"
+    >
+        Dealerships
+    </flux:navbar.item>
     <flux:navbar.item wire:navigate href="#">Contacts</flux:navbar.item>
     <flux:navbar.item wire:navigate href="#">Reminders</flux:navbar.item>
     <flux:navbar.item wire:navigate href="{{ route('user.index') }}">Users</flux:navbar.item>

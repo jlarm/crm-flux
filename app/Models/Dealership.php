@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enum\DevStatus;
 use App\Enum\Rating;
+use App\Enum\State;
 use App\Enum\Status;
 use App\Enum\Type;
 use App\Observers\DealershipObserver;
@@ -42,7 +43,7 @@ class Dealership extends Model
         'name' => 'string',
         'address' => 'string',
         'city' => 'string',
-        'state' => 'string',
+        'state' => State::class,
         'zip_code' => 'string',
         'phone' => 'string',
         'email' => 'string',

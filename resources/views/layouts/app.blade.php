@@ -27,9 +27,7 @@
 
             <flux:spacer />
 
-            <flux:subheading class="text-xs" wire:poll.1s>
-                {{ now()->inUserTimezone()->format('F d, y h:i:s a') }}
-            </flux:subheading>
+            <livewire:components.date-time />
 
             <flux:dropdown position="top" align="start">
                 <flux:button variant="ghost" icon-trailing="chevron-down">{{ auth()->user()->name }}</flux:button>

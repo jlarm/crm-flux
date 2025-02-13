@@ -1,7 +1,9 @@
 <div>
     <x-slot name="pageTitle">Dealerships</x-slot>
     <x-slot name="actions">
-        <flux:button variant="primary" size="sm">Create</flux:button>
+        <flux:button wire:navigate variant="primary" size="sm" href="{{ route('dealership.create') }}">
+            Create
+        </flux:button>
     </x-slot>
     <div class="space-y-10">
         <flux:radio.group wire:model.live="filters.status" variant="cards" :indicator="false" class="max-sm:flex-col">
