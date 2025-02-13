@@ -2,7 +2,9 @@
     <x-slot name="pageTitle">{{ $dealership->name }}</x-slot>
     <form wire:submit.prevent="update">
         <div class="grid grid-cols-12 gap-5">
-            <livewire:dealership.components.nav :$dealership />
+            <div class="col-span-2">
+                <livewire:dealership.components.nav :$dealership />
+            </div>
             <div class="col-span-7">
                 <flux:card>
                     <div class="space-y-5">

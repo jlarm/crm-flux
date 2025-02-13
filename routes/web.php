@@ -3,6 +3,7 @@
 use App\Livewire\Dealership\Create;
 use App\Livewire\Dealership\Index;
 use App\Livewire\Dealership\Show;
+use App\Livewire\Dealership\StoreIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -21,6 +22,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
         Route::get('{dealership:uuid}', Show::class)
             ->name('dealership.show');
+
+        Route::get('{dealership:uuid}/stores}', StoreIndex::class)
+            ->name('dealership.stores');
     });
 
     Route::get('users', \App\Livewire\User\Index::class)
