@@ -14,7 +14,7 @@
         </flux:badge>
     </flux:cell>
     <flux:cell>
-        <flux:badge size="sm">{{ mt_rand(1, 20) }}</flux:badge>
+        <flux:badge size="sm">{{ $dealership->stores()->count() }}</flux:badge>
     </flux:cell>
     <flux:cell class="text-xs">{{ $dealership->type->label() }}</flux:cell>
     <flux:cell>
@@ -22,5 +22,7 @@
             <p class="text-xs">{{ $user->name }}</p>
         @endforeach
     </flux:cell>
-    <flux:cell>View</flux:cell>
+    <flux:cell>
+        <a wire:navigate href="{{ route('dealership.show', $dealership) }}">View</a>
+    </flux:cell>
 </flux:row>
