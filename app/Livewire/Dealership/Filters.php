@@ -27,11 +27,15 @@ class Filters extends Form
     #[Url]
     public array $users = [];
 
+    #[Url]
+    public bool $dev = false;
+
     public function apply($query)
     {
         $query = $this->applyStatus($query);
         $query = $this->applyTypes($query);
         $query = $this->applyRating($query);
+        $query = $this->applyDevStatus($query);
 
         return $this->applyUsers($query);
     }
@@ -79,6 +83,15 @@ class Filters extends Form
             ->whereNot('id', 1)
             ->whereHas('dealerships')
             ->get();
+    }
+
+    public function applyDevStatus($query)
+    {
+        if ($this->dev) {
+            return $query->where('in_development', true);
+        }
+
+        return $query;
     }
 
     public function applyStatus($query, $status = null)

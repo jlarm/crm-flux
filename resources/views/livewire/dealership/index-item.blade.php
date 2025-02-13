@@ -14,7 +14,7 @@
         </flux:badge>
     </flux:cell>
     <flux:cell>
-        <flux:badge size="sm">{{ $dealership->stores()->count() }}</flux:badge>
+        <flux:badge size="sm">{{ $dealership->stores()->count() + 1 }}</flux:badge>
     </flux:cell>
     <flux:cell class="text-xs">{{ $dealership->type->label() }}</flux:cell>
     <flux:cell>
