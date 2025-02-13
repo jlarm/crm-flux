@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Dealership\ContactIndex;
 use App\Livewire\Dealership\Create;
 use App\Livewire\Dealership\Index;
 use App\Livewire\Dealership\Show;
@@ -23,8 +24,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('{dealership:uuid}', Show::class)
             ->name('dealership.show');
 
-        Route::get('{dealership:uuid}/stores}', StoreIndex::class)
+        Route::get('{dealership:uuid}/stores', StoreIndex::class)
             ->name('dealership.stores');
+
+        Route::get('{dealership:uuid}/contacts', ContactIndex::class)
+            ->name('dealership.contacts');
     });
 
     Route::get('users', \App\Livewire\User\Index::class)

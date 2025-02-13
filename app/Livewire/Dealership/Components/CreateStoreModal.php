@@ -31,8 +31,8 @@ class CreateStoreModal extends Component
         ]);
 
         Flux::toast(
-            text: 'Dealership created successfully',
-            heading: 'Dealership Created',
+            text: 'Store created successfully',
+            heading: 'Store Created',
             variant: 'success'
         );
 

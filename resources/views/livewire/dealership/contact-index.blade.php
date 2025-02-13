@@ -2,7 +2,7 @@
     <x-slot name="pageTitle">{{ $dealership->name }}</x-slot>
     <x-slot name="actions">
         <div>
-            <livewire:dealership.components.create-store-modal :$dealership />
+            <livewire:dealership.components.create-contact-modal :$dealership />
         </div>
     </x-slot>
     <div class="grid grid-cols-12 gap-10">
@@ -10,22 +10,38 @@
             <livewire:dealership.components.nav :$dealership />
         </div>
         <div class="col-span-9">
-            <flux:table :paginate="$this->stores">
+            <flux:table :paginate="$this->contacts">
                 <flux:columns>
                     <flux:column>Name</flux:column>
-                    <flux:column>Phone</flux:column>
+                    <flux:column>Contact</flux:column>
+                    <flux:column>Role</flux:column>
+                    <flux:column>LinkedIn</flux:column>
+                    <flux:column>Primary Contact</flux:column>
                     <flux:column></flux:column>
                 </flux:columns>
                 <flux:rows>
-                    @foreach ($this->stores as $store)
+                    @foreach ($this->contacts() as $contact)
                         <flux:row>
+                            <flux:cell>{{ $contact->name }}</flux:cell>
+                            <flux:cell>{{ $contact->email }}</flux:cell>
+                            <flux:cell>{{ $contact->role }}</flux:cell>
                             <flux:cell>
-                                {{ $store->name }}
-                                <span class="block text-xs text-zinc-400">
-                                    {{ $store->city }}, {{ $store->state }}
-                                </span>
+                                @if ($contact->linkedin)
+                                    <flux:button
+                                        href="{{ $contact->linkedin }}"
+                                        target="_blank"
+                                        size="xs"
+                                        inset="top bottom"
+                                        variant="ghost"
+                                        icon="arrow-top-right-on-square"
+                                    ></flux:button>
+                                @endif
                             </flux:cell>
-                            <flux:cell>{{ $store->phone }}</flux:cell>
+                            <flux:cell>
+                                @if ($contact->primary)
+                                    <flux:badge size="sm" inset="top bottom" color="lime">Primary</flux:badge>
+                                @endif
+                            </flux:cell>
                             <flux:cell>
                                 <flux:dropdown class="flex justify-end">
                                     <flux:button

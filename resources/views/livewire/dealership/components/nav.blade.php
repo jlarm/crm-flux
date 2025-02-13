@@ -15,7 +15,14 @@
     >
         Stores
     </flux:navlist.item>
-    <flux:navlist.item wire:navigate href="#" icon="user">Contacts</flux:navlist.item>
+    <flux:navlist.item
+        wire:navigate
+        href="{{ route('dealership.contacts', $dealership) }}"
+        icon="user"
+        :current="request()->routeIs('dealership.contacts', $dealership)"
+    >
+        Contacts
+    </flux:navlist.item>
     <flux:navlist.item wire:navigate href="#" icon="chart-bar">Progress</flux:navlist.item>
     <flux:navlist.item wire:navigate href="#" icon="envelope">Emails</flux:navlist.item>
 </flux:navlist>

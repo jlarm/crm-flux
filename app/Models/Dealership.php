@@ -67,4 +67,9 @@ class Dealership extends Model
     {
         return $this->hasMany(Store::class);
     }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
 }
